@@ -2,6 +2,8 @@ package edu.infosys.inventoryApplication.dao;
 
 
 import java.util.List;
+import java.util.Map;
+import java.util.HashMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -10,10 +12,15 @@ import org.springframework.stereotype.Service;
 import edu.infosys.inventoryApplication.bean.ProductSales;
 import edu.infosys.inventoryApplication.bean.StockTransaction;
 
+import org.springframework.jdbc.core.JdbcTemplate;
+
 
 @Repository
 @Service
 public class StockTransactionDaoImpl implements StockTransactionDao {
+	
+	@Autowired
+	private JdbcTemplate jdbcTemplate;
 	
 	@Autowired
 	private StockTransactionRepository repository;
@@ -73,5 +80,27 @@ public class StockTransactionDaoImpl implements StockTransactionDao {
     	return repository.getDemandByProduct(productId);
     }
 
+	@Override
+	public List<Map<String, Object>> getDailyTransactionSummary() {
+	    String sql = """
+	        SELECT 
+	            transaction_date AS transactionDate,
+	            transaction_type AS transactionType,
+	            SUM(transaction_value) AS totalValue
+	        FROM stock_transaction
+	        GROUP BY transaction_date, transaction_type
+	        ORDER BY transaction_date;
+	    """;
 
+	    return jdbcTemplate.query(sql, (rs, rowNum) -> {
+	        Map<String, Object> map = new HashMap<>();
+	        map.put("transactionDate", rs.getString("transactionDate"));
+	        map.put("transactionType", rs.getString("transactionType"));
+	        map.put("totalValue", rs.getDouble("totalValue"));
+	        return map;
+	    });
+	
+
+	
+	}
 }

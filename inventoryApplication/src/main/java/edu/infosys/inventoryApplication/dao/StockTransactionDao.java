@@ -1,6 +1,7 @@
 package edu.infosys.inventoryApplication.dao;
 
 import java.util.List;
+import java.util.Map;
 import edu.infosys.inventoryApplication.bean.StockTransaction;
 import edu.infosys.inventoryApplication.bean.ProductSales;
 public interface StockTransactionDao {
@@ -13,6 +14,8 @@ public interface StockTransactionDao {
     public void removeTransactionById(Long id);
     public List<ProductSales> getProductWiseTotalSale();
     public List<Double> getDemandByProduct(String productId);
+    
+    public List<Map<String,Object>> getDailyTransactionSummary();
 
 
 
