@@ -1,0 +1,114 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+
+body {
+    font-family: 'Poppins',sans-serif !important;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    background: linear-gradient(-45deg, #c3b4e6, #e3c5d1, #e6bdbd, #c5e1f0);
+    background-size: 400% 400%;
+    animation: gradientShift 20s ease infinite;
+}
+
+@keyframes gradientShift {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+.login-box {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.9);
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2), 0 0 0 1px rgba(255, 255, 255, 0.7);
+    text-align: center;
+    width: 30vw;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease;
+    max-height: 90vh;
+    overflow-y: scroll;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+.login-box::-webkit-scrollbar {
+    display: none;
+    width: 0;
+    height: 0;
+}
+
+
+h3 {
+    margin-bottom: 30px;
+    color: #333;
+    font-size: 2em;
+    font-weight: 700;
+    letter-spacing: -0.8px;
+}
+
+h2 {
+    margin-top: 30px;
+    font-size: 0.95em; 
+    color: #5d5d7e;
+}
+
+h2 a {
+    text-decoration: none;
+    color: #007bff; 
+    font-weight: 600;
+    transition: color 0.2s ease;
+}
+u{
+     text-decoration: none !important;
+}
+h2 a:hover {
+    color: #0056b3;
+    text-decoration: none;
+}
+
+input[type="text"],
+input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #e5e7eb;
+    border-radius: 5px;
+    box-sizing: border-box;
+    font-size: 1em;
+    box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+}
+
+input[type="submit"] {
+    background-color: #a16ff8;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+    width: 100%;
+}
+
+input[type="submit"]:hover {
+    background-color: #b13def;
+}
+
+.card{
+  --bs-card-border-color: none !important;
+}  
+
+.row{
+    padding:0 1.6rem;
+}
