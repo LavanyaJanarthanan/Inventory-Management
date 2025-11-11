@@ -9,12 +9,8 @@ import org.springframework.security.config.annotation.authentication.configurati
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.web.servlet.config.annotation.CorsRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-
 
 import edu.infosys.inventoryApplication.service.InventoryUserService;
-import edu.infosys.inventoryApplication.service.ProductService;
 
 @Configuration
 @EnableMethodSecurity
@@ -34,30 +30,11 @@ public class SystemConfig {
 	
 	@Bean
 	SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-	    http
-	        .csrf().disable()
-	        .authorizeHttpRequests(auth -> auth
-	            .requestMatchers("/inventory/**").permitAll() // allow all under /inventory/
-	            .anyRequest().authenticated()
-	        )
-	        .cors(); // keep CORS enabled
-
-	    return http.build();
+		http.csrf().disable().authorizeHttpRequests((authorize) ->
+        authorize.requestMatchers(HttpMethod.GET, "/inventory/**").permitAll()
+               .requestMatchers("/inventory/**").permitAll()
+               .anyRequest().authenticated()
+               );    		
+	      return http.build();
 	}
-	
-	@Bean
-	public WebMvcConfigurer corsConfigurer() {
-	    return new WebMvcConfigurer() {
-	        @Override
-	        public void addCorsMappings(CorsRegistry registry) {
-	            registry.addMapping("/**")
-	                    .allowedOrigins("http://localhost:3838")
-	                    .allowedMethods("GET", "POST", "PUT", "DELETE")
-	                    .allowedHeaders("*")
-	                    .allowCredentials(true);
-	        }
-	    };
-	}
-
-	
 }

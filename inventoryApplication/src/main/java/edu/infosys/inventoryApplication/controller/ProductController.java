@@ -1,7 +1,7 @@
 package edu.infosys.inventoryApplication.controller;
 
-import java.util.List;
 
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -17,10 +17,13 @@ import edu.infosys.inventoryApplication.bean.Product;
 import edu.infosys.inventoryApplication.dao.ProductDao;
 import edu.infosys.inventoryApplication.service.ProductService;
 
+
+
 @RestController
-@RequestMapping("/inventory")
-@CrossOrigin(origins="http://localhost:3838")
+@RequestMapping("/inventory/")
+@CrossOrigin(origins = "http://localhost:3838")
 public class ProductController {
+	
 	@Autowired
 	private ProductService service;
 	
@@ -28,46 +31,42 @@ public class ProductController {
 	private ProductDao productDao;
 	
 	@GetMapping("/product")
-	public List getAllProducts() {
+	public List<Product> displayAllProducts() {
 		 List<Product> productList=productDao.showAllProducts();
     		return productList;
 		}
 	
 	@PostMapping("/product")
-	public void addProduct(@RequestBody Product product) {
+	public void saveNewProduct(@RequestBody Product product) {
 		 Product finalProduct=service.setSalesPrice(product);
 		 productDao.save(finalProduct);
 	}
 	@GetMapping("/product/{id}")
-	public Product getProductById(@PathVariable String id) {
+	public Product showAProduct(@PathVariable String id) {
 		Product product=productDao.findProductById(id);
 		return product;
 	}
 	@DeleteMapping("/product/{id}")
-	public void deleteProduct(@PathVariable String id) {
+	public void deleteAProduct(@PathVariable String id) {
 		productDao.removeProduct(id);
 	}
 	
 	@PutMapping("/product/{qty}/{flag}")
-	public void stockUpdate(@RequestBody Product product,@PathVariable double qty, @PathVariable int flag) {
+	public void editProductStock(@RequestBody Product product,@PathVariable double qty, @PathVariable int flag) {
 		Product  updatedProduct=service.stockEdit(product,qty,flag);
 		productDao.save(updatedProduct);
 	}
 	
 	@PutMapping("/product")
-	public void priceUpdate(@RequestBody Product product) {
+	public void editProductPrice(@RequestBody Product product) {
 		Product updatedProduct=service.setSalesPrice(product);
 		productDao.save(updatedProduct);
 	}
 	
 	@GetMapping("/id-gen")
-	public String productIdGenerate() {
-	  return productDao.generateId();
-	  
+	public String productIdGenerator() {
+	  return productDao.generateId(); 
 	}
+ 	
 	
- 
-	
-	
-
 }

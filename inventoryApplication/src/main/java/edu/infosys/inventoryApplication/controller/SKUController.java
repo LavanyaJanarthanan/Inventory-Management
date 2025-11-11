@@ -3,7 +3,6 @@ package edu.infosys.inventoryApplication.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,6 +20,7 @@ import edu.infosys.inventoryApplication.dao.SKUDao;
 @RequestMapping("/inventory/")
 @CrossOrigin(origins = "http://localhost:3838")
 public class SKUController {
+	
 	@Autowired
 	private SKUDao skuDao;
 	
@@ -28,34 +28,29 @@ public class SKUController {
 	public void save(@RequestBody SKU sku) {
 		skuDao.save(sku);
 	}
+	
+	@GetMapping("/SKU/{id}")
+	public SKU findSKUById(@PathVariable String id) {
+		return skuDao.findSKUById(id);
+	}
+	
+	@DeleteMapping("/SKU/{id}")
+	public void removeSKU(@PathVariable String id) {
+		skuDao.removeSKU(id);;
+	}
 
 	@GetMapping("/SKU")
 	public List<SKU> showAllSKUs() {
 		return skuDao.showAllSKUs();
 	}
 	
-	@DeleteMapping("/SKU/{id}")
-	public void removeSKU(@PathVariable String id) {
-		skuDao.removeSKU(id);
+	@PutMapping("/SKU")
+	public void update(@RequestBody SKU sku) {
+		skuDao.update(sku);
 	}
 	
-	@GetMapping("/SKU/{id}")
-		public SKU findSKUId(@PathVariable String id) {
-			return skuDao.findSKUById(id);
-		}
-		
-		@PutMapping("/SKU")
-		public void update(@RequestBody SKU sku) {
-			skuDao.save(sku);
-
-			
-		}
-		
-		@GetMapping("/all-ids")
-		public List<String> getSkuIdList(){
-			return skuDao.getSkuIdList();
-		}
+	@GetMapping("/all-ids")
+	public List<String> getSkuIdList(){
+		return skuDao.getSkuIdList();
 	}
-
-
-
+}

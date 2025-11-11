@@ -6,7 +6,7 @@ import edu.infosys.inventoryApplication.bean.Product;
 
 @Service
 public class ProductService {
-
+	
 	public Product stockEdit(Product product,Double qty, int flag) {
 		double stock=product.getStock();
 		boolean status=product.getStatus();
@@ -24,9 +24,7 @@ public class ProductService {
 		product.setStock(stock);
 		product.setStatus(status);
 		return product;
- 
 	}
- 
 	
 	public Product setSalesPrice(Product product) {
 		double purchasePrice=product.getPurchasePrice();
@@ -34,7 +32,6 @@ public class ProductService {
 		product.setSalesPrice(salesPrice);
 		return product;
 	}
- 
 	
 	public String stockChecking(Product product) {
 		double stock=product.getStock();
@@ -48,4 +45,5 @@ public class ProductService {
 		
 	}
  
+	
 }

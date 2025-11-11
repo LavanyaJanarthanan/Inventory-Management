@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
-
 import edu.infosys.inventoryApplication.bean.SKU;
 
 @Repository
@@ -34,15 +33,14 @@ public class SKUDaoImpl implements SKUDao{
 	public List<SKU> showAllSKUs() {
 		return repository.findAll();
 	}
-	
+
+	@Override
 	public void update(SKU sku) {
 		repository.save(sku);
-		
 	}
 	
 	@Override
 	public List<String> getSkuIdList(){
-		return repository.getSkuList();
+		return repository.getSkuIdList();
 	}
-	
 }

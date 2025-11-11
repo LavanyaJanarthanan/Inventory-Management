@@ -1,13 +1,12 @@
-
 package edu.infosys.inventoryApplication.controller;
 
-import org.springframework.security.core.Authentication;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -20,17 +19,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 import edu.infosys.inventoryApplication.bean.InventoryUser;
 import edu.infosys.inventoryApplication.config.EncoderConfig;
-import edu.infosys.inventoryApplication.dao.InventoryUserRepository;
 import edu.infosys.inventoryApplication.service.InventoryUserService;
 
 @RestController
 @RequestMapping("/inventory/")
 @CrossOrigin(origins = "http://localhost:3838")
 public class LoginController {
-	
-	@Autowired
-	  private InventoryUserRepository repository;
-	
+
 	@Autowired
 	private InventoryUserService service;
 	
@@ -47,6 +42,7 @@ public class LoginController {
 		user.setPassword(encodedPassword);
 		service.save(user);
 	}
+	
 	@GetMapping("/login/{userId}/{password}")
 	public String validateUser(@PathVariable String userId,@PathVariable String password) {
 		String role="false";
@@ -58,19 +54,19 @@ public class LoginController {
 		return role;
 	}
 	
-	@GetMapping("login")
-	public InventoryUser getSingleUserDetails() {
-		return service.getUser();
+	@GetMapping("/login")
+	public InventoryUser getSingleUserDetails(){
+		 	  return service.getUser();
 	}
-	
 	@GetMapping("/login/{role}")
-	public List<String> getUsersByRole(@PathVariable String role){
-		return service.getUsersByRole(role);
+	public List<String> getUserByRole(@PathVariable String role){
+		 	  return service.getUserByRole(role);
 	}
 	
 	@GetMapping("/role")
 	public String getUserRole() {
 		return service.getRole();
 	}
+	
+	
 }
- 

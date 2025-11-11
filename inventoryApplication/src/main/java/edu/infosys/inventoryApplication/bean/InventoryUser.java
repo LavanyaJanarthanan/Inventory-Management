@@ -1,18 +1,19 @@
 package edu.infosys.inventoryApplication.bean;
 
-
 import java.util.ArrayList;
 import java.util.Collection;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+
 @Entity
 public class InventoryUser extends User{
-  @Id
+	
+	@Id
 	private String username;
-	private String personalname;
-	private String password;
+	private String personalName;
+	private String  password;
 	private String email;
 	private String role;
 	
@@ -25,7 +26,7 @@ public class InventoryUser extends User{
 		super(username, password, authorities);
 		this.username = username2;
 		this.password = password2;
-		this.personalname=personalName2;
+		this.personalName=personalName2;
 		this.email = email2;
 		this.role = role2;
 	}
@@ -37,11 +38,11 @@ public class InventoryUser extends User{
 	public void setUsername(String username) {
 		this.username = username;
 	}
-	public String getPersonalname() {
-		return personalname;
+	public String getPersonalName() {
+		return personalName;
 	}
-	public void setPersonalname(String personalname) {
-		this.personalname = personalname;
+	public void setPersonalName(String personalName) {
+		this.personalName = personalName;
 	}
 	public String getPassword() {
 		return password;
@@ -61,9 +62,11 @@ public class InventoryUser extends User{
 	public void setRole(String role) {
 		this.role = role;
 	}
+	
+	
 	@Override
 	public String toString() {
-		return "InventoryUser [username=" + username + ", personalname=" + personalname + ", password=" + password
+		return "InventoryUser [username=" + username + ", personalName=" + personalName + ", password=" + password
 				+ ", email=" + email + ", role=" + role + "]";
 	}
 	
