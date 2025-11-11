@@ -22,7 +22,7 @@ const ViewProduct = () => {
     useEffect(() => {
         getProductById(param.pid).then( response => {
             setProduct(response.data);
-        })
+        })      
       }, [param.pid]);
  
        const returnBack=()=>{
@@ -93,14 +93,15 @@ const ViewProduct = () => {
         <label>Vendor ID:</label>
         <span>{product.vendorId}</span>
       </div>
-            <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "12px", fontWeight: 500 }}>
-<label>Status:</label>
-       <span>{product.status===true ? <span  style={{textAlign: "center",color:"green"}}>Permited to Issue</span>: <span style={{textAlign: "center",color:"red"}}>Reorder Level Reached</span> }</span>  </div>
+      <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "12px", fontWeight: 500 }}>
+        <label>Stock Status:</label>
+        <span>{product.status ?<p style={{color:'green'}}>Permitted to Isuue</p> : <p style={{color:'red'}}>Reached Reorder Level</p>}</span>
+      </div>
     </div>
 
     <button
       onClick={returnBack}
-      className="btn btn-success d-block mx-auto"
+      className="btn btn-warning d-block mx-auto"
     >
     Return
     </button>

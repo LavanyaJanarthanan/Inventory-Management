@@ -1,67 +1,81 @@
 import React, {useState} from "react";
 import { useNavigate } from 'react-router-dom';
-import '../../LoginView.css';
+import '../../DarkTheme.css';
 import {registerNewUser} from '../../Services/LoginService';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUser, faLock, faBoxes, faIdCard, faEnvelope, faUserTag, faCheckDouble } from '@fortawesome/free-solid-svg-icons';
 
 
 const RegisterUser = () => {
+  
     const [inventoryUser,setInventoryUser] = useState({
         username:"",
-        personalname:"",
+        personalName:"",
         password: "",
         email:"",
         role:"",
     });
     const [confirmPassword,setConfirmPassword]=useState("");
-   let navigate = useNavigate();
-   const [errors, setErrors] = useState({});
-   const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    let navigate = useNavigate();
+    const [errors, setErrors] = useState({});
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     
-   const saveUser = (event) => {
+    const saveUser = (event) => {
       event.preventDefault();
       if(inventoryUser.password===confirmPassword){
-         registerNewUser(inventoryUser).then((response)=>{
-           alert("User is registered successfully...");
-             
-         });
+           registerNewUser(inventoryUser).then((response)=>{
+            alert("User is registered successfully...Go For Login");
+            navigate('/');     
+          });
+      }
+    };
+
+    const reset=(event)=>{
+      event.preventDefault()
+      const user={username:"",personalName:"",
+          password: "",
+          email:"",
+          role:""}
+        setConfirmPassword("");
+      setInventoryUser(user);
+      setErrors({}); 
     }
-  };
 
-  const  onChangeHandler = (event) =>{
-    event.persist();
-    const name = event.target.name;
-        const value = event.target.value;
-       setInventoryUser(values =>({...values, [name]: value }));
-     };
+    const  onChangeHandler = (event) =>{
+      event.persist();
+      const name = event.target.name;
+          const value = event.target.value;
+          setInventoryUser(values =>({...values, [name]: value }));
+        };
+    
+    const onConfirmPasswordChange = (event) => {
+        setConfirmPassword(event.target.value);
+    };
 
-     const returnBack=()=>{
-      navigate('/');
-     }
-
-     const handleValidation = (event) => {
+    const handleValidation = (event) => {
         event.preventDefault();
         let tempErrors = {};
         let isValid = true;
-   
+
         if (!inventoryUser.username.trim()) {
           tempErrors.username = "User Name is required";
           isValid = false;
         }
-   
+    
         if (!inventoryUser.password.trim()) {
           tempErrors.password = "Password is required";
           isValid = false;
         }
-        else if (inventoryUser.password.length < 5 || inventoryUser.passwordlength > 10) {
-           tempErrors.password="Password must be 5-10 characters long";
+        else if (inventoryUser.password.length < 5 || inventoryUser.password.length > 10) { 
+            tempErrors.password="Password must be 5-10 characters long";
           isValid = false;
         }
         else if (inventoryUser.password!==confirmPassword) {
-          tempErrors.password="Both the passwords are not matched";
-         isValid = false;
-       }
-        if (!inventoryUser.personalname.trim()) {
-            tempErrors.personalname = "Personal Name is required";
+          tempErrors.confirmPassword="Both the passwords are not matched";
+          isValid = false;
+        }
+        if (!inventoryUser.personalName.trim()) {
+            tempErrors.personalName = "Personal Name is required";
             isValid = false;
           }
           if (!inventoryUser.email.trim()) {
@@ -80,7 +94,7 @@ const RegisterUser = () => {
             tempErrors.confirmPassword = "Confirm Password is required";
             isValid = false;
           }
- 
+    
         setErrors(tempErrors);
         if (isValid) {
           saveUser(event);
@@ -88,103 +102,99 @@ const RegisterUser = () => {
       };
 
 
+    return (
 
-  return (
-    <div>
-     <br/>
-       <div className = ".container">
-          <div className = "row">
-              <div className = "card col-md-2 offset-md-3 offset-md-3">
-                  <div className = "login-box">
-                    <h2 className="text-center"><u>New User Registration</u> </h2>
-                       <br/>
-                        <form  method="post">
-                            <div className = "form-group">
-                                 <label>User Name: </label>
-                                <input placeholder="username" name="username" className="form-control"
-                                    value={inventoryUser.username} onChange={(event) => onChangeHandler(event)} />
-                                 {errors.username && <p style={{ color: "red" }}>{errors.username}</p>}
-                            </div>
-                            <div className = "form-group">
-                                <label>Password: </label>
-                                <input type="password"   name="password" className="form-control"
-                                    value={inventoryUser.password} onChange={(event) => onChangeHandler(event)}/>
-                                 {errors.password && <p style={{ color: "red" }}>{errors.password}</p>}
-                            </div>
-                            <div className = "form-group">
-                                <label>Retype your Password: </label>
-                                <input type="password"   name="confirmPassword" className="form-control"
-                                    value={confirmPassword} onChange={(event) =>setConfirmPassword(event.target.value)}/>
-                                {errors.confirmPassword && <p style={{ color: "red" }}>{errors.confirmPassword}</p>}
-                            </div>
-                            <div className = "form-group">
-                                 <label>User's Personal Name: </label>
-                                <input placeholder="personal name" name="personalname" className="form-control"
-                                    value={inventoryUser.personalname} onChange={(event) => onChangeHandler(event)} />
-                                 {errors.personalname && <p style={{ color: "red" }}>{errors.personalname}</p>}
-                            </div>
-                            <div className = "form-group">
-                                 <label>User Email: </label>
-                                <input placeholder="email" name="email" className="form-control"
-                                    value={inventoryUser.email} onChange={(event) => onChangeHandler(event)} />
-                                {errors.email && <p style={{ color: "red" }}>{errors.email}</p>}
-                            </div>
-                            <div className = "form-group">
-                               <label>Select Role : </label>
-                                <input list="types"  name="role" className="form-control"
-                                    value={inventoryUser.role} onChange={(event) => onChangeHandler(event)} />
-                                    <datalist id="types">
-                                      <option value="Manager"/>
-                                    <option value="Admin"/>
-                                    <option value="Vendor"/>    
-                                   </datalist>
-                                   {errors.role && <p style={{ color: "red" }}>{errors.role}</p>}
-                             </div>
-                             <br/>
-<div style={{ display: "flex", justifyContent: "space-between", marginTop: "20px" }}>
-  <button
-    type="button"
-    className="btn btn-primary"
-    onClick={handleValidation}
-  >
-    Submit
-  </button>
-
-  <button
-    type="button"
-    className="btn btn-warning"
-    onClick={() => {
-      setInventoryUser({
-        username: "",
-        personalname: "",
-        password: "",
-        email: "",
-        role: "",
-      });
-      setConfirmPassword("");
-      setErrors({});
-    }}
-  >
-    Reset
-  </button>
-  <button
-    type="button"
-    className="btn btn-primary"
-    onClick={returnBack}
-  >
-    Return
-  </button>
-
-</div>
-                        </form>
-                    </div>
-                 </div>
+        <div className="login-container-wrapper">
+          <div className="login-container">
+                
+            
+            <div className="logo-area">
+                <FontAwesomeIcon icon={faBoxes} className="logo-icon" />
+                <h1>Smartshelfx</h1>
+                <p>Your Smart Shelf Management System</p>
             </div>
-       </div>
-    </div>
- 
 
-  )
+       
+            <div className="register-box-new"> 
+              <h2 className="text-center">New User Registration</h2>
+                
+              <form method="post">
+                  
+  
+                <div className="input-group-custom">
+                    <FontAwesomeIcon icon={faUser} />
+                    <input placeholder="Username" name="username" 
+                        value={inventoryUser.username} onChange={onChangeHandler} 
+                    />
+                </div>
+                {errors.username && <p className="error-text">{errors.username}</p>}
+                
+        
+                <div className="input-group-custom">
+                    <FontAwesomeIcon icon={faIdCard} />
+                    <input placeholder="Personal Name" name="personalName" 
+                        value={inventoryUser.personalName} onChange={onChangeHandler} 
+                    />
+                </div>
+                {errors.personalName && <p className="error-text">{errors.personalName}</p>}
+                
+     
+                <div className="input-group-custom">
+                    <FontAwesomeIcon icon={faLock} />
+                    <input type="password" placeholder="Password (5-10 chars)" name="password" 
+                        value={inventoryUser.password} onChange={onChangeHandler}
+                    />
+                </div>
+                {errors.password && <p className="error-text">{errors.password}</p>}
+                
+       
+                <div className="input-group-custom">
+                    <FontAwesomeIcon icon={faCheckDouble} />
+                    <input type="password" placeholder="Confirm Password" name="confirmPassword" 
+                        value={confirmPassword} onChange={onConfirmPasswordChange}
+                    />
+                </div>
+                {errors.confirmPassword && <p className="error-text">{errors.confirmPassword}</p>}
+
+     
+                <div className="input-group-custom">
+                    <FontAwesomeIcon icon={faEnvelope} />
+                    <input type="email" placeholder="User Email" name="email" 
+                        value={inventoryUser.email} onChange={onChangeHandler} 
+                    />
+                </div>
+                {errors.email && <p className="error-text">{errors.email}</p>}
+                
+  
+                <div className="input-group-custom">
+                    <FontAwesomeIcon icon={faUserTag} />
+                    <input list="types" placeholder="Select Role" name="role" 
+                        value={inventoryUser.role} onChange={onChangeHandler} 
+                    />
+                    <datalist id="types">
+                        <option value="Manager"/>
+                        <option value="Admin"/>
+                        <option value="Vendor"/> 	
+                    </datalist>
+                </div>
+                {errors.role && <p className="error-text">{errors.role}</p>}
+                
+
+                <div className="register-button-group"> 
+                    <button className='register-submit-button' onClick={handleValidation}>REGISTER</button>
+                    <button className='register-reset-button' onClick={reset}>RESET</button>
+                </div>
+                
+              </form>
+              
+              <div className="signup-text-custom">
+                  <p>Already have an account? <span className="login-link" onClick={() => navigate('/')}>Login here</span></p>
+              </div>
+              
+            </div>
+          </div>
+        </div>
+    )
 }
 
-export default RegisterUser
+export default RegisterUser;

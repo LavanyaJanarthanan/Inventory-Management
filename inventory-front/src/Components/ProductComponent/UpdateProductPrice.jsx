@@ -14,15 +14,21 @@ const UpdateProductPrice = () => {
                     reorderLevel:0.0,
                     stock:0.0,
                     vendorId:"",
-                    status:true,
+                    status:true
     });
+    const [price,setPrice]=useState(0.0);
     const param=useParams();
     useEffect(() => {
         getProductById(param.pid).then( response => {
             setProduct(response.data);
+            setPrice(response.data.purchasePrice);
         })
     }, [param.pid]);
      
+    const reset=(event)=>{
+      event.preventDefault()
+      setProduct(prev=>({...prev,purchasePrice:price}))
+    }
     let navigate = useNavigate();
     const [errors, setErrors] = useState({});
 
@@ -44,8 +50,20 @@ const UpdateProductPrice = () => {
             event.preventDefault();
             let tempErrors = {};
             let isValid = true;
-            if (product.purchasePrice===0) {
-              tempErrors.purchasePrice = "Purchase Price  is required";
+             if (typeof(product.purchasePrice)==String && !product.purchasePrice.trim()) {
+              tempErrors.purchasePrice = "Purchase Price is required";
+              isValid = false;
+            }
+            if (product.purchasePrice===0.0) {
+              tempErrors.purchasePrice = "Purchase Price cannot be zero";
+              isValid = false;
+            }
+             if (product.purchasePrice<0.0) {
+              tempErrors.purchasePrice = "Purchase Price cannot be negative";
+              isValid = false;
+            }
+            if (product.purchasePrice>0.0 && product.purchasePrice<10.0) {
+              tempErrors.purchasePrice = "Purchase Price not less than 10";
               isValid = false;
             }
             setErrors(tempErrors);
@@ -86,7 +104,8 @@ const UpdateProductPrice = () => {
                                     value={product.vendorId} readOnly/>
                             </div>
                              <br/>
-                            <button className='btn btn-primary' onClick={handleValidation}>Submit</button>
+                            <button className='btn btn-primary' onClick={handleValidation}>Submit</button>&nbsp;&nbsp;
+                            &nbsp;&nbsp;<button className='btn btn-secondary' onClick={reset}>Reset</button>
                         </form>
                     </div>
                  </div>

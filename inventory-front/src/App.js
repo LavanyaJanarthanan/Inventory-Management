@@ -13,11 +13,12 @@ import ProductAddition from "./Components/ProductComponent/ProductAddition";
 import ProductReport from "./Components/ProductComponent/ProductReport";
 import ViewProduct from "./Components/ProductComponent/ViewProduct";
 import UpdateProductPrice from "./Components/ProductComponent/UpdateProductPrice";
+// import EditStock from "./Components/ProductComponent/EditStock";
 import EditStock1 from "./Components/ProductComponent/EditStock1";
-import InTransactionReport from "./Components/TransactionComponent/InTransactionReport";
-import OutTransactionReport from "./Components/TransactionComponent/OutTransactionReport";
-import AllProductAnalysis from "./Components/ProductComponent/AllProductAnalysis";
-import TransactionLineChart from "./Components/AnalysisComponent/TransactionLineChart";
+import TransactionReport from "./Components/ProductComponent/TransactionReport";
+import ProductAnalysis from "./Components/ProductComponent/ProductAnalysis";
+import SingleProductAnalysis from "./Components/ProductComponent/SingleProductAnalysis";
+
 
 function App() {
   return (
@@ -38,11 +39,10 @@ function App() {
         <Route path="/view-product/:pid" element={<ViewProduct/>}/>
         <Route path="/update-prodPrice/:pid/" element={<UpdateProductPrice/>}/>
         <Route path="/edit-stock/:pid/:flag" element={<EditStock1/>}/>
-        <Route path="/In-Transaction-Report" element={<InTransactionReport/>}></Route>
-                <Route path="/Out-Transaction-Report" element={<OutTransactionReport/>}></Route>
-                <Route path="/all-products" element={<AllProductAnalysis/>}></Route>
-                <Route path="/tran" element={<TransactionLineChart/>}></Route>
-
+         <Route path="/trans-repo/:type" element={<TransactionReport/>}/>
+         <Route path="/analysis/all" element={<ProductAnalysis/>}/>
+         <Route path="/analysis/Single" element={<SingleProductAnalysis />} />
+    
       </Routes>
      </BrowserRouter>
  

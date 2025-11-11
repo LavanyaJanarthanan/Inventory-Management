@@ -9,11 +9,13 @@ const SKUUpdate = () => {
             skuId:"",
             skuDescription:""
         });
+    const [desription,setDesription]=useState();
     const {id}=useParams();
 
     useEffect(()=>{
         findSKUById(id).then((res)=>{
         setSku(res.data);
+        setDesription(res.data.skuDescription);
         })
     },[id])
     let navigate = useNavigate();
@@ -25,12 +27,15 @@ const SKUUpdate = () => {
             const value = event.target.value;
         setSku(values =>({...values, [name]: value }));
     };
-
+    const reset=(event)=>{
+      event.preventDefault();
+      setSku(prev=>({...prev,skuDescription:desription}))
+    }
     const updateSku = (event) => {
           event.preventDefault();
           update(sku).then((response)=>{
                alert("SKU Updated");
-               navigate('/SkuRepo');    
+               navigate('/AdminMenu');    
              });
         }
 
@@ -72,7 +77,8 @@ const SKUUpdate = () => {
                                  {errors.skuDescription && <p style={{ color: "red" }}>{errors.skuDescription}</p>}
                             </div>
                              <br/>
-                            <button className='btn btn-primary' onClick={handleValidation}>Update</button>
+                            <button className='btn btn-primary' onClick={handleValidation}>Update</button>&nbsp;&nbsp;
+                            &nbsp;&nbsp;<button className='btn btn-secondary' onClick={reset}>Reset</button>
                         </form>
                     </div>
                  </div>

@@ -5,21 +5,7 @@ body {
     margin: 0;
     padding: 0;
     overflow-x: hidden;
-    background: linear-gradient(-45deg, #c3b4e6, #e3c5d1, #e6bdbd, #c5e1f0);
-    background-size: 400% 400%;
-    animation: gradientShift 20s ease infinite;
-}
-
-@keyframes gradientShift {
-    0% {
-        background-position: 0% 50%;
-    }
-    50% {
-        background-position: 100% 50%;
-    }
-    100% {
-        background-position: 0% 50%;
-    }
+    background-color: #1e1e2d !important;
 }
 
 .login-box {
@@ -47,14 +33,38 @@ body {
     width: 0;
     height: 0;
 }
+#basic-navbar-nav{
+  background-color: #3c3c55;
+}
+.hover {
+  border: 2px solid transparent;   
+  padding: 10px 20px;              
+  border-radius: 8px;              
+  transition: border 0.3s ease;    
+}
 
 
+.hover:hover {
+  border: 2px solid #007bff;      
+}
+
+
+.scroller{
+    overflow-y: scroll;
+}
+.scroller::-webkit-scrollbar{
+    display: none;
+}
 h3 {
     margin-bottom: 30px;
     color: #333;
     font-size: 2em;
     font-weight: 700;
     letter-spacing: -0.8px;
+}
+.top-bar{
+  background-color:  #0056b3;
+  color: #fff;
 }
 
 h2 {
@@ -76,6 +86,7 @@ h2 a:hover {
     color: #0056b3;
     text-decoration: none;
 }
+
 
 input[type="text"],
 input[type="password"] {
@@ -108,7 +119,76 @@ input[type="submit"]:hover {
 .card{
   --bs-card-border-color: none !important;
 }  
-
 .row{
-    padding:0 1.6rem;
+    padding:0 1rem;
+}
+
+
+/* Default nowrap */
+.no-wrap {
+  white-space: nowrap;
+}
+
+/* Admin wrap */
+.wrap {
+  white-space: normal !important;
+  word-wrap: break-word;
+  line-height: 1.6;
+  text-align: center; /* centers wrapped buttons */
+}
+
+/* Spacing between buttons */
+.wrap button,
+.no-wrap button {
+  margin: 4px 6px;
+}
+
+/* Hover effects */
+.btn:hover {
+  transform: translateY(-2px);
+  transition: all 0.2s ease-in-out;
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.2);
+}
+.btn-primary:hover {
+  box-shadow: 0 0 8px rgba(13, 110, 253, 0.6);
+}
+.btn-secondary:hover {
+  box-shadow: 0 0 8px rgba(108, 117, 125, 0.6);
+}
+.btn-success:hover {
+  box-shadow: 0 0 8px rgba(25, 135, 84, 0.6);
+}
+.btn-info:hover {
+  box-shadow: 0 0 8px rgba(13, 202, 240, 0.6);
+}
+.btn-danger:hover {
+  box-shadow: 0 0 8px rgba(220, 53, 69, 0.6);
+}
+.btn:active {
+  transform: scale(0.97);
+}
+
+
+.nav-link{
+    color: white !important;
+}
+.color{
+    background-color: rgb(145, 87, 199);
+    color: white;
+    margin-bottom: 0;
+    font-weight: 600;
+}
+
+
+
+.dropdown-menu-dark .dropdown-item {
+  border: 2px solid transparent;   
+  padding: 10px 20px;              
+  border-radius: 8px;              
+  transition: border 0.3s ease;    
+}
+
+
+.dropdown-menu-dark .dropdown-item:hover  {
+  border: 2px solid #007bff;      
 }
